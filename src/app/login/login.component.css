@@ -1,0 +1,11 @@
+
+.form-signin {
+    margin: auto;
+    width: 20%;
+    min-width: 300px;
+    margin-top: 120px;
+}
+
+.btn-login {
+    margin-top: 20px;
+}

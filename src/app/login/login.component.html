@@ -1,3 +1,8 @@
-<p>
-  login works!
-</p>
+<ngb-alert *ngIf="error" type="danger" (close)="error=false">Cannot communicate with backend!</ngb-alert>
+
+<form class="form-signin" onsubmit="return false;">
+  <h2>Please sign in</h2>
+  <input [value]="loginData.userName" type="text" id="inputUser" class="form-control" placeholder="Username" required="" autofocus="">
+  <input [value]="loginData.passwd" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+  <button class="btn-lg btn-primary btn-block btn-login" type="submit" (click)="login()" >Sign in</button>
+</form>

@@ -12,31 +12,40 @@ export class LoginComponent implements OnInit {
   loginData: {userName: String, passwd: String} =
     {userName: '', passwd: ''};
   error = false;
+  loginfailure = false;
+
+  userName: String;
 
   httpObs: Observable<any>;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+  }
+
+  login() {
     this.httpObs = this.http.post(
-    'api.datwuffy.com/login.php',
+    'http://localhost:80/login.php',
     JSON.stringify(this.loginData),
     {headers: new HttpHeaders().set('Content-Type', 'application/json')}
     );
 
-
-  }
-
-  login() {
     this.httpObs.subscribe(
-      (data) => {
-
+      (data: boolean) => {
+        console.log(data);
+        if (data) {
+          this.loginfailure = false;
+          this.error = false;
+        } else {
+          this.loginfailure = true;
+        }
       },
       (err: HttpErrorResponse) => {
         console.log(err);
         this.error = true;
       }
     );
+
     return false;
   }
 

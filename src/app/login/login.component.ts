@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   httpObs: Observable<any>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -36,8 +37,10 @@ export class LoginComponent implements OnInit {
         if (data) {
           this.loginfailure = false;
           this.error = false;
+          this.router.navigate([`manage`]);
         } else {
           this.loginfailure = true;
+          this.error = false;
         }
       },
       (err: HttpErrorResponse) => {

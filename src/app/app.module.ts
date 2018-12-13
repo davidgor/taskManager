@@ -11,6 +11,13 @@ import { UsersComponent } from './users/users.component';
 import { ProcessesComponent } from './processes/processes.component';
 import { StatusComponent } from './status/status.component';
 import { HttpClientModule } from '@angular/common/http';
+import { Routes, RouterModule } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: '', component: ManagerComponent},
+  { path: 'login', component: LoginComponent},
+  { path: 'manage', component: ManagerComponent}
+];
 
 @NgModule({
   declarations: [
@@ -26,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
     FormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

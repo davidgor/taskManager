@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     );
 
     this.httpObs.subscribe(
-      (data: boolean) => {
+      (data) => {
         console.log(data);
         if (data) {
           this.loginfailure = false;

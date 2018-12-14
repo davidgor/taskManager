@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 
 const appRoutes: Routes = [
-  { path: '', component: ManagerComponent},
+  { path: '', component: LoginComponent},
   { path: 'login', component: LoginComponent},
   { path: 'manage', component: ManagerComponent}
 ];

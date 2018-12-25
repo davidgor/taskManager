@@ -12,21 +12,22 @@ export class ManagerComponent implements OnInit {
 
 
   httpObs: Observable<any>;
-
-  users: Array<JSON> = [];
+  users: Array<{user: String, id: Number}> = [];
+  test: Array<String> = ['test'];
 
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     const options = new HttpHeaders('withCredentials: true');
-    this.httpObs = this.http.get('http://localhost:80/getProcesses.php', {headers: options});
+    this.httpObs = this.http.get('http://localhost:80/getUser.php', {headers: options});
 
     this.httpObs.subscribe(
       (data: JSON) => {
         let id = 0;
-        while (data['user' + id] !== undefined) {
-          this.users += (data['user' + id].JSON);
-          console.log('user is' + data['user' + id]);
+        while (data['id' + id] !== undefined) {
+          this.users.push(
+            {user: data['user' + id], id: id['id' + id]}
+          );
           id++;
         }
       },

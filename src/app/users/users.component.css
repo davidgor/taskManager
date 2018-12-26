@@ -1,0 +1,19 @@
+.act {
+    width: 100%;
+    font-size: 30px;
+}
+
+.nameField {
+    width: 20%;
+    height: 40px;
+}
+
+.cmdField {
+    width: 60%;
+    height: 40px;
+}
+
+.createBtn {
+    width: 20%;
+    height: 40px;
+}

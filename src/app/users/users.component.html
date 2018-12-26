@@ -1,4 +1,12 @@
-<button (click)="this.hide = !this.hide">{{this.user.user}}</button><br>
+<button class="act" (click)="open();">{{this.user.user}}</button><br>
 <div [hidden]="this.hide">
-    hey
-</div>
+    {{this.msg}}
+    <app-processes
+        *ngFor="let process of this.processes"
+        [process]=process>
+    </app-processes>
+
+    <input placeholder="name" type="text" class="nameField">
+    <input placeholder="command" type="text" class="cmdField">
+    <input type="button" class="createBtn" value="ADD">
+</div> 

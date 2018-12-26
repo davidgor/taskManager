@@ -1,3 +1,8 @@
-<p>
-  processes works!
-</p>
+<div class="proMain">
+  <div class="runState" [style.backgroundColor]="this.stateColor">{{this.state}}</div> 
+  <input type="button" class="StartStopBtn" [value]="this.targetRun">
+  <input type="text" class="nameField" [value]="this.process.name">
+  <input type="text" class="cmdField" [value]="this.process.cmd">
+  <input type="button" class="updateBtn" value="UPDATE">
+  <input type="button" class="removeBtn" value="REMOVE">
+</div>

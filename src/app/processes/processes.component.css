@@ -1,0 +1,39 @@
+.proMain {
+    border-bottom: 1px solid black;
+}
+
+.runState {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+
+    width: 5%;
+    height: 40px;
+    float: left;
+}
+
+.StartStopBtn {
+    width: 10%;
+    height: 40px;
+}
+
+.nameField {
+    width: 15%;
+    height: 40px;
+}
+
+.cmdField {
+    width: 50%;
+    height: 40px;
+}
+
+.updateBtn {
+    width: 10%;
+    height: 40px;
+}
+
+.removeBtn {
+    width: 10%;
+    height: 40px;
+}
+

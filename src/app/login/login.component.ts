@@ -25,10 +25,11 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    const options = new HttpHeaders('withCredentials: true');
     this.httpObs = this.http.post(
     'http://localhost:80/login.php',
     JSON.stringify(this.loginData),
-    {headers: new HttpHeaders().set('Content-Type', 'application/json')}
+    {headers: options.set('Content-Type', 'application/json')}
     );
 
     this.httpObs.subscribe(

@@ -13,7 +13,7 @@ export class ManagerComponent implements OnInit {
 
   httpObs: Observable<any>;
   users: Array<{user: String, id: Number}> = [];
-  test: Array<String> = ['test'];
+
 
   constructor(private router: Router, private http: HttpClient) { }
 
@@ -26,7 +26,7 @@ export class ManagerComponent implements OnInit {
         let id = 0;
         while (data['id' + id] !== undefined) {
           this.users.push(
-            {user: data['user' + id], id: id['id' + id]}
+            {user: data['user' + id], id: data['id' + id]}
           );
           id++;
         }

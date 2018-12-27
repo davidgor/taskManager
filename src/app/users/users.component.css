@@ -9,7 +9,12 @@
 }
 
 .cmdField {
-    width: 60%;
+    width: 35%;
+    height: 40px;
+}
+
+.dirField {
+    width: 25%;
     height: 40px;
 }
 

@@ -15,7 +15,7 @@ export class UsersComponent implements OnInit {
 
   httpObs: Observable<any>;
   processes: Array<{id: Number, state: Boolean, targetState: Boolean,
-                name: String, cmd: String}> = [];
+                name: String, cmd: String, dir: String}> = [];
 
   @Input() user: {user: String, id: Number};
 
@@ -56,7 +56,7 @@ export class UsersComponent implements OnInit {
 
             this.processes.push(
               {id: data['id' + id], state: state, targetState: targetState,
-               name: data['name' + id], cmd: data['cmd' + id]}
+               name: data['name' + id], cmd: data['cmd' + id], dir: data['dir' + id]}
             );
             id++;
           }

@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { EventEmitter } from 'protractor';
 
 @Component({
   selector: 'app-processes',
@@ -11,8 +12,8 @@ export class ProcessesComponent implements OnInit {
 
 
   @Input() process: {id: Number, state: Boolean, targetState: Boolean,
-                     name: String, cmd: String, dir: String};
-
+                     name: String, cmd: String, dir: String, user: Number};
+  @Output() processesRemoved = new EventEmitter();
   state: String = 'STOP';
   stateColor: String = 'red';
   targetRun: String = 'START';
@@ -24,7 +25,7 @@ export class ProcessesComponent implements OnInit {
   ngOnInit() {
     if (this.process.state) {
       this.state = 'RUN';
-      this.stateColor = 'GREEN';
+      this.stateColor = 'green';
     }
     if (this.process.targetState) {
       this.targetRun = 'STOP';
@@ -48,6 +49,10 @@ export class ProcessesComponent implements OnInit {
       }
     );
 
+  }
+
+  remove() {
+    
   }
 
 }

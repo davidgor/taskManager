@@ -1,13 +1,13 @@
 <button class="act" (click)="open();">{{this.user.user}}</button><br>
 <div [hidden]="this.hide">
-    {{this.msg}}
+    <div>{{this.msg}}</div>
     <app-processes
         *ngFor="let process of this.processes"
         [process]=process>
     </app-processes>
 
-    <input placeholder="name" type="text" class="nameField">
-    <input placeholder="command" type="text" class="cmdField">
-    <input placeholder="directory" type="text" class="dirField">
-    <input type="button" class="createBtn" value="ADD">
+    <input placeholder="name" type="text" [(ngModel)]="this.processPrototype.name" class="nameField">
+    <input placeholder="command" type="text" [(ngModel)]="this.processPrototype.cmd" class="cmdField" >
+    <input placeholder="directory" type="text" [(ngModel)]="this.processPrototype.dir" class="dirField">
+    <input type="button" class="createBtn" value="ADD" (click)="add();" [disabled]="this.adding">
 </div> 

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -16,7 +16,9 @@ export class UsersComponent implements OnInit {
 
   loadHttp: Observable<any>;
   addHttp: Observable<any>;
-  processes: Array<{id: Number, state: Boolean, targetState: Boolean,
+  relHttp: Observable<any>;
+
+  processes: Array<{id: String, state: Boolean, targetState: Boolean,
                 name: String, cmd: String, dir: String, user: Number}> = [];
 
 
@@ -38,6 +40,13 @@ export class UsersComponent implements OnInit {
     JSON.stringify(this.user),
     {headers: options.set('Content-Type', 'application/json')}
     );
+    this.relHttp = this.http.post(
+    'http://localhost:80/getRunning.php',
+    JSON.stringify(this.user),
+    {headers: options.set('Content-Type', 'application/json')}
+    );
+
+    interval(2500).subscribe(x =>  this.refreshStatus());
 
   }
 
@@ -63,8 +72,8 @@ add() {
     this.adding = true;
 
     this.addHttp.subscribe(
-        (data: JSON) => {
-          this.adding = true;
+        () => {
+          this.adding = false;
           this.processPrototype.name = '';
           this.processPrototype.cmd  = '';
           this.processPrototype.dir  = '';
@@ -112,5 +121,36 @@ add() {
         this.msg = 'Error loading data\n';
       }
     );
+  }
+
+  refreshStatus() {
+    if (!this.hide) {
+      this.relHttp.subscribe(
+        (data: JSON) => {
+          this.msg = '';
+          let id = 0;
+          while (data['id' + id] !== undefined) {
+
+            // check if process is running or not
+            let state: Boolean = false;
+            if (data['run' + id] === '1') {
+              state = true;
+            }
+
+            // find the process with the id
+            this.processes.forEach(function(process) {
+              const Sid = '' + id;
+              if (process.id  ===  Sid) {
+                process.state = state;
+              }
+            });
+            id++;
+          }
+        },
+        (err: HttpErrorResponse) => {
+          console.log(err);
+        }
+      );
+    }
   }
 }

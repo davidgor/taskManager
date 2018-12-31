@@ -12,6 +12,8 @@ import { ProcessesComponent } from './processes/processes.component';
 import { StatusComponent } from './status/status.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
+import { WarningComponent } from './warning/warning.component';
+import { ContorolComponent } from './contorol/contorol.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent},
@@ -26,7 +28,9 @@ const appRoutes: Routes = [
     ManagerComponent,
     UsersComponent,
     ProcessesComponent,
-    StatusComponent
+    StatusComponent,
+    WarningComponent,
+    ContorolComponent
   ],
   imports: [
     HttpClientModule,

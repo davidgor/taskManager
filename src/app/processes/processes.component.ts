@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { EventEmitter } from 'protractor';
 
 @Component({
   selector: 'app-processes',
@@ -13,12 +12,14 @@ export class ProcessesComponent implements OnInit {
 
   @Input() process: {id: Number, state: Boolean, targetState: Boolean,
                      name: String, cmd: String, dir: String, user: Number};
-  @Output() processesRemoved = new EventEmitter();
+  @Output() removed = new EventEmitter();
+
   state: String = 'STOP';
   stateColor: String = 'red';
   targetRun: String = 'START';
 
-  httpObs: Observable<any>;
+  httpUpdate: Observable<any>;
+  httpRemove: Observable<any>;
 
   constructor(private http: HttpClient) { }
 
@@ -30,18 +31,25 @@ export class ProcessesComponent implements OnInit {
     if (this.process.targetState) {
       this.targetRun = 'STOP';
     }
+
+    const options = new HttpHeaders('withCredentials: true');
+    this.httpRemove = this.http.post(
+    'http://localhost:80/remTask.php',
+    JSON.stringify(this.process),
+    {headers: options.set('Content-Type', 'application/json')}
+    );
   }
 
   update() {
     // setup telegram
     const options = new HttpHeaders('withCredentials: true');
-    this.httpObs = this.http.post(
+    this.httpUpdate = this.http.post(
     'http://localhost:80/changeTask.php',
     JSON.stringify(this.process),
     {headers: options.set('Content-Type', 'application/json')}
     );
 
-    this.httpObs.subscribe(
+    this.httpUpdate.subscribe(
       (data: JSON) => {
       },
       (err: HttpErrorResponse) => {
@@ -52,7 +60,15 @@ export class ProcessesComponent implements OnInit {
   }
 
   remove() {
-    
+
+    this.httpRemove.subscribe(
+      (data: JSON) => {
+        this.removed.emit(null);
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      }
+    );
   }
 
 }

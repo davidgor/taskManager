@@ -3,7 +3,8 @@
     <div>{{this.msg}}</div>
     <app-processes
         *ngFor="let process of this.processes"
-        [process]=process>
+        [process]=process
+        (removed)="reloadData()">
     </app-processes>
 
     <input placeholder="name" type="text" [(ngModel)]="this.processPrototype.name" class="nameField">

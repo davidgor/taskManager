@@ -1,0 +1,13 @@
+.userHolder {
+    margin-top: 45px;
+    margin-right: 5%;
+    width: 20%; 
+    border: 5px solid black;
+    border-radius: 10px;
+    float: right;
+}
+
+.act {
+    width: 100%;
+    font-size: 30px;
+}

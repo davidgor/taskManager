@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { WarningComponent } from './warning/warning.component';
 import { ContorolComponent } from './contorol/contorol.component';
+import { WarningService } from './warning/service/warning.service';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent},
@@ -40,7 +41,7 @@ const appRoutes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [WarningService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

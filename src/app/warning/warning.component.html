@@ -1,1 +1,12 @@
-<ngb-alert *ngIf="loginfailure" type="danger" (close)="loginfailure=false">login data is worng!</ngb-alert>
+<ngb-alert 
+    *ngFor="let msg of this.warningService.mesages; index as i"
+    type="{{msg.type}}" 
+    (close)="this.warningService.removeMsg(i)"
+    style="margin: 2px">
+    {{msg.mesage}}
+</ngb-alert>
+<ngb-alert
+    type="warning"
+    *ngIf="this.warningService.conectionLost">
+    Connection lost
+</ngb-alert>

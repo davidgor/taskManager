@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { WarningService } from '../warning/service/warning.service';
 
 @Component({
   selector: 'app-manager',
@@ -15,7 +16,7 @@ export class ManagerComponent implements OnInit {
   users: Array<{user: String, id: Number}> = [];
 
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private warningService: WarningService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     const options = new HttpHeaders('withCredentials: true');
@@ -33,6 +34,7 @@ export class ManagerComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         console.log(err);
+        this.warningService.addMsg('Your not logged in', 'danger');
         this.router.navigate([`login`]);
       }
     );

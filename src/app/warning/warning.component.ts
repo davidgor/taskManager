@@ -5,11 +5,10 @@ import { WarningService } from './service/warning.service';
   selector: 'app-warning',
   templateUrl: './warning.component.html',
   styleUrls: ['./warning.component.css'],
-  providers: [ WarningService ]
+  providers: []
 })
 export class WarningComponent implements OnInit {
 
-  mesages: Array<String> = [];
 
   constructor(private warningService: WarningService ) { }
 

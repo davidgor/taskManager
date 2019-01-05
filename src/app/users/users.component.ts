@@ -1,11 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, interval } from 'rxjs';
+import { WarningService } from '../warning/service/warning.service';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
+  providers: []
 })
 export class UsersComponent implements OnInit {
 
@@ -30,7 +32,7 @@ export class UsersComponent implements OnInit {
   = {id: 0, state: false, targetState: false,
      name: '', cmd: '', dir: '', user: 1};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private warningService: WarningService ) { }
 
   ngOnInit() {
 
@@ -73,6 +75,7 @@ add() {
 
     this.addHttp.subscribe(
         () => {
+          this.warningService.addMsg('Item added', 'success');
           this.adding = false;
           this.processPrototype.name = '';
           this.processPrototype.cmd  = '';
@@ -80,7 +83,8 @@ add() {
           this.reloadData();
         },
         (err: HttpErrorResponse) => {
-          this.adding = true;
+          this.warningService.addMsg('faild adding item: ' + err.message , 'danger');
+          this.adding = false;
           console.log(err);
         }
       );
@@ -119,6 +123,8 @@ add() {
       (err: HttpErrorResponse) => {
         console.log(err);
         this.msg = 'Error loading data\n';
+        this.loaded = false;
+        this.warningService.addMsg('Error loading processes: ' + err.message, 'danger');
       }
     );
   }
@@ -127,6 +133,8 @@ add() {
     if (!this.hide) {
       this.relHttp.subscribe(
         (data: JSON) => {
+          this.warningService.conectionLost = false;
+
           this.msg = '';
           let id = 0;
           while (data['id' + id] !== undefined) {
@@ -139,8 +147,7 @@ add() {
 
             // find the process with the id
             this.processes.forEach(function(process) {
-              const Sid = '' + id;
-              if (process.id  ===  Sid) {
+              if (process.id  ===  data['id' + id]) {
                 process.state = state;
               }
             });
@@ -148,6 +155,7 @@ add() {
           }
         },
         (err: HttpErrorResponse) => {
+          this.warningService.conectionLost = true;
           console.log(err);
         }
       );

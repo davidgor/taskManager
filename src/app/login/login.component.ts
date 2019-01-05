@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { WarningService } from '../warning/service/warning.service';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,12 @@ export class LoginComponent implements OnInit {
 
   loginData: {userName: String, passwd: String} =
     {userName: '', passwd: ''};
-  error = false;
-  loginfailure = false;
 
   userName: String;
 
   httpObs: Observable<any>;
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private warningService: WarningService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -36,17 +35,15 @@ export class LoginComponent implements OnInit {
       (data) => {
         console.log(data);
         if (data) {
-          this.loginfailure = false;
-          this.error = false;
+          this.warningService.addMsg('Logged in', 'success');
           this.router.navigate([`manage`]);
         } else {
-          this.loginfailure = true;
-          this.error = false;
+          this.warningService.addMsg('Login data wrong', 'danger');
         }
       },
       (err: HttpErrorResponse) => {
         console.log(err);
-        this.error = true;
+        this.warningService.addMsg('Can not contact server: ' + err.message, 'danger');
       }
     );
 

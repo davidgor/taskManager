@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { WarningService } from '../warning/service/warning.service';
 
 @Component({
   selector: 'app-processes',
@@ -19,9 +20,10 @@ export class ProcessesComponent implements OnInit {
   targetRun: String = 'START';
 
   httpUpdate: Observable<any>;
+  httpsetState: Observable<any>;
   httpRemove: Observable<any>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private warningService: WarningService, private http: HttpClient) { }
 
   ngOnInit() {
     if (this.process.state) {
@@ -51,8 +53,10 @@ export class ProcessesComponent implements OnInit {
 
     this.httpUpdate.subscribe(
       (data: JSON) => {
+        this.warningService.addMsg('Item updated', 'success');
       },
       (err: HttpErrorResponse) => {
+        this.warningService.addMsg('Error updating item: ' + err.message, 'danger');
         console.log(err);
       }
     );
@@ -64,8 +68,35 @@ export class ProcessesComponent implements OnInit {
     this.httpRemove.subscribe(
       (data: JSON) => {
         this.removed.emit(null);
+        this.warningService.addMsg('Item removed', 'success');
       },
       (err: HttpErrorResponse) => {
+        console.log(err);
+        this.warningService.addMsg('Error removing process: ' + err.message, 'danger');
+      }
+    );
+  }
+
+  changeState() {
+    this.process.targetState = !this.process.targetState;
+
+    this.targetRun = 'START';
+    if (this.process.targetState) {
+      this.targetRun = 'STOP';
+    }
+
+    const options = new HttpHeaders('withCredentials: true');
+    this.httpsetState = this.http.post(
+    'http://localhost:80/setState.php',
+    JSON.stringify(this.process),
+    {headers: options.set('Content-Type', 'application/json')}
+    );
+    this.httpsetState.subscribe(
+      (data: JSON) => {
+        this.warningService.addMsg('status change pending', 'success');
+      },
+      (err: HttpErrorResponse) => {
+        this.warningService.addMsg('Item change error: ' + err.message , 'danger');
         console.log(err);
       }
     );

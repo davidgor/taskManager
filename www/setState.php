@@ -20,8 +20,10 @@
 	
 	echo '{}';
 
-	$stmt = $conn->prepare("INSERT INTO `task manager`.`Processes` (`name`, `cmd`, `dir`, `parrent`) VALUES (?, ?, ?, ?)");
-	$stmt->bind_param("ssss", $data["name"], $data["cmd"], $data["dir"], $data["user"]);
+    if($data["targetState"]=="true")
+        $stmt = $conn->prepare("UPDATE `task manager`.`Processes` SET `setState`=b'1' WHERE `id`=?;");
+    else
+		$stmt = $conn->prepare("UPDATE `task manager`.`Processes` SET `setState`=b'0' WHERE `id`=?;");
+	$stmt->bind_param("i", $data["id"]);
     $stmt->execute();
-    
 ?>

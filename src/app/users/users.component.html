@@ -7,8 +7,8 @@
         (removed)="reloadData()">
     </app-processes>
 
-    <input placeholder="name" type="text" [(ngModel)]="this.processPrototype.name" class="nameField">
-    <input placeholder="command" type="text" [(ngModel)]="this.processPrototype.cmd" class="cmdField" >
-    <input placeholder="directory" type="text" [(ngModel)]="this.processPrototype.dir" class="dirField">
-    <input type="button" class="createBtn" value="ADD" (click)="add();" [disabled]="this.adding">
+    <input placeholder="name" type="text" [(ngModel)]="this.processPrototype.name" class="nameField"    [disabled]="this.enabled">
+    <input placeholder="command" type="text" [(ngModel)]="this.processPrototype.cmd" class="cmdField"   [disabled]="this.enabled">
+    <input placeholder="directory" type="text" [(ngModel)]="this.processPrototype.dir" class="dirField" [disabled]="this.enabled">
+    <input type="button" class="createBtn" value="ADD" (click)="add();" [disabled]="this.adding||this.enabled">
 </div> 

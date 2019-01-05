@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { WarningService } from '../warning/service/warning.service';
+import { UserService } from '../userService/user.service';
 
 @Component({
   selector: 'app-processes',
@@ -15,6 +16,8 @@ export class ProcessesComponent implements OnInit {
                      name: String, cmd: String, dir: String, user: Number};
   @Output() removed = new EventEmitter();
 
+  enabled: Boolean;
+
   state: String = 'STOP';
   stateColor: String = 'red';
   targetRun: String = 'START';
@@ -23,7 +26,10 @@ export class ProcessesComponent implements OnInit {
   httpsetState: Observable<any>;
   httpRemove: Observable<any>;
 
-  constructor(private warningService: WarningService, private http: HttpClient) { }
+  constructor(
+    private userS: UserService,
+    private warningService: WarningService,
+    private http: HttpClient) { }
 
   ngOnInit() {
     if (this.process.state) {
@@ -33,6 +39,8 @@ export class ProcessesComponent implements OnInit {
     if (this.process.targetState) {
       this.targetRun = 'STOP';
     }
+
+    this.enabled = !this.userS.hasPremition(this.process.user);
 
     const options = new HttpHeaders('withCredentials: true');
     this.httpRemove = this.http.post(

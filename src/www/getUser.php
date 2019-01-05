@@ -2,19 +2,14 @@
 	session_start();
 
     // check if logged in
-    if(!isset($_SESSION["user"]))
+    if(!isset($_SESSION["id"]))
     {
-		http_response_code(500);
+		http_response_code(403);
 		exit();
     }
 
 	// connect to databace
-	$conn = new mysqli("localhost", "david", "86942a", "task manager");
-	if ($conn->connect_error)
-	{
-	    http_response_code(500);
-		exit();
-    }
+	include "db.php";
 	
 	echo '{';
 

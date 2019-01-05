@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { WarningService } from '../warning/service/warning.service';
+import { UserService } from '../userService/user.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   httpObs: Observable<any>;
 
-  constructor(private warningService: WarningService, private router: Router, private http: HttpClient) { }
+  constructor(private userS: UserService, private warningService: WarningService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -34,9 +35,10 @@ export class LoginComponent implements OnInit {
     this.httpObs.subscribe(
       (data) => {
         console.log(data);
-        if (data) {
+        if (data !== 0) {
           this.warningService.addMsg('Logged in', 'success');
           this.router.navigate([`manage`]);
+          this.userS.setUserID(data);
         } else {
           this.warningService.addMsg('Login data wrong', 'danger');
         }

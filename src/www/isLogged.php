@@ -2,9 +2,9 @@
     session_start();
 
    // $_SESSION["user"] = "oki";
-    if(isset($_SESSION["user"]))
+    if(isset($_SESSION["id"]))
     {
-        echo 1;
+        echo $_SESSION["id"];
     }
     else
     {

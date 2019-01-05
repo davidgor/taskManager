@@ -2,9 +2,9 @@
   <div class="runState" [hidden]="!this.process.state" style="background-color: green">RUN</div> 
   <div class="runState" [hidden]="this.process.state"  style="background-color: red">STOP</div>
   <input type="button" class="StartStopBtn" (click)="changeState();" [value]="this.targetRun">
-  <input type="text" class="nameField" [(ngModel)]="this.process.name">
-  <input type="text" class="cmdField" [(ngModel)]="this.process.cmd">
-  <input type="text" class="dirField" [(ngModel)]="this.process.dir">
-  <input type="button" class="updateBtn" value="UPDATE" (click)="update();">
-  <input type="button" class="removeBtn" value="REMOVE" (click)="remove();">
+  <input type="text" class="nameField" [(ngModel)]="this.process.name" [disabled]="this.enabled">
+  <input type="text" class="cmdField" [(ngModel)]="this.process.cmd" [disabled]="this.enabled">
+  <input type="text" class="dirField" [(ngModel)]="this.process.dir" [disabled]="this.enabled">
+  <input type="button" class="updateBtn" value="UPDATE" (click)="update();" [disabled]="this.enabled">
+  <input type="button" class="removeBtn" value="REMOVE" (click)="remove();" [disabled]="this.enabled">
 </div>

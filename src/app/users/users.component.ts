@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, interval } from 'rxjs';
+import { Observable, interval, Subscription } from 'rxjs';
 import { WarningService } from '../warning/service/warning.service';
+import { UserService } from '../userService/user.service';
 
 @Component({
   selector: 'app-users',
@@ -9,12 +10,15 @@ import { WarningService } from '../warning/service/warning.service';
   styleUrls: ['./users.component.css'],
   providers: []
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
+  enabled: Boolean;
   hide = true;
   adding = false;
   loaded: Boolean = false;
   msg: String = '';
+
+  timer: Subscription;
 
   loadHttp: Observable<any>;
   addHttp: Observable<any>;
@@ -24,7 +28,7 @@ export class UsersComponent implements OnInit {
                 name: String, cmd: String, dir: String, user: Number}> = [];
 
 
-  @Input() user: {user: String, id: Number};
+  @Input() user: {user: String, id: number};
 
 
   processPrototype: {id: Number, state: Boolean, targetState: Boolean,
@@ -32,9 +36,13 @@ export class UsersComponent implements OnInit {
   = {id: 0, state: false, targetState: false,
      name: '', cmd: '', dir: '', user: 1};
 
-  constructor(private http: HttpClient, private warningService: WarningService ) { }
+  constructor(
+    private userS: UserService,
+    private http: HttpClient,
+    private warningService: WarningService ) { }
 
   ngOnInit() {
+    this.enabled = !this.userS.hasPremition(this.user.id);
 
     const options = new HttpHeaders('withCredentials: true');
     this.loadHttp = this.http.post(
@@ -48,8 +56,12 @@ export class UsersComponent implements OnInit {
     {headers: options.set('Content-Type', 'application/json')}
     );
 
-    interval(2500).subscribe(x =>  this.refreshStatus());
+    this.timer = interval(2500).subscribe(x =>  this.refreshStatus());
 
+  }
+
+  ngOnDestroy(): void {
+    this.timer.unsubscribe();
   }
 
   open() {

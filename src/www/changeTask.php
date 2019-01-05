@@ -1,18 +1,20 @@
-<?php 
+<?php
 	session_start();
 
 	// check if logged in
-    if(!isset($_SESSION["user"]))
+    if(!isset($_SESSION["id"]))
     {
-		http_response_code(500);
+		http_response_code(403);
 		exit();
     }
 
 	// connect to databace
-	$conn = new mysqli("localhost", "david", "86942a", "task manager");
-	if ($conn->connect_error)
+	include "db.php";
+
+	// premision check
+	if($_SESSION["id"]!=1 && $_SESSION["id"]!=$data["user"])
 	{
-	    http_response_code(500);
+		http_response_code(500);
 		exit();
 	}
 	

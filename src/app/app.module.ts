@@ -9,7 +9,6 @@ import { LoginComponent } from './login/login.component';
 import { ManagerComponent } from './manager/manager.component';
 import { UsersComponent } from './users/users.component';
 import { ProcessesComponent } from './processes/processes.component';
-import { StatusComponent } from './status/status.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { WarningComponent } from './warning/warning.component';

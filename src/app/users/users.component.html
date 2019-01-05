@@ -3,7 +3,7 @@
     <div>{{this.msg}}</div>
     <app-processes
         *ngFor="let process of this.processes"
-        [process]=process
+        [process]="this.process"
         (removed)="reloadData()">
     </app-processes>
 

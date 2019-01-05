@@ -10,7 +10,7 @@ import { WarningService } from './service/warning.service';
 export class WarningComponent implements OnInit {
 
 
-  constructor(private warningService: WarningService ) { }
+  constructor(public warningService: WarningService ) { }
 
   ngOnInit() {
   }

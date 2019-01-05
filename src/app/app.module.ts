@@ -28,7 +28,6 @@ const appRoutes: Routes = [
     ManagerComponent,
     UsersComponent,
     ProcessesComponent,
-    StatusComponent,
     WarningComponent,
     ContorolComponent
   ],

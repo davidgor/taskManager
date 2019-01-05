@@ -64,17 +64,18 @@ export class ProcessesComponent implements OnInit {
   }
 
   remove() {
-
-    this.httpRemove.subscribe(
-      (data: JSON) => {
-        this.removed.emit(null);
-        this.warningService.addMsg('Item removed', 'success');
-      },
-      (err: HttpErrorResponse) => {
-        console.log(err);
-        this.warningService.addMsg('Error removing process: ' + err.message, 'danger');
-      }
-    );
+    if (confirm('Are you sure to delete this?')) {
+      this.httpRemove.subscribe(
+        (data: JSON) => {
+          this.removed.emit(null);
+          this.warningService.addMsg('Item removed', 'success');
+        },
+        (err: HttpErrorResponse) => {
+          console.log(err);
+          this.warningService.addMsg('Error removing process: ' + err.message, 'danger');
+        }
+      );
+    }
   }
 
   changeState() {

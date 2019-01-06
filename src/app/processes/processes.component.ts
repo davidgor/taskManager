@@ -12,8 +12,8 @@ import { UserService } from '../userService/user.service';
 export class ProcessesComponent implements OnInit {
 
 
-  @Input() process: {id: Number, state: Boolean, targetState: Boolean,
-                     name: String, cmd: String, dir: String, user: Number};
+  @Input() process: {id: number, state: Boolean, targetState: Boolean,
+                     name: String, cmd: String, dir: String, user: number};
   @Output() removed = new EventEmitter();
 
   enabled: Boolean;

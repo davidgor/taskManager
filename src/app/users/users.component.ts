@@ -25,14 +25,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   relHttp: Observable<any>;
 
   processes: Array<{id: String, state: Boolean, targetState: Boolean,
-                name: String, cmd: String, dir: String, user: Number}> = [];
+                name: String, cmd: String, dir: String, user: number}> = [];
 
 
   @Input() user: {user: String, id: number};
 
 
-  processPrototype: {id: Number, state: Boolean, targetState: Boolean,
-                    name: String, cmd: String, dir: String, user: Number}
+  processPrototype: {id: number, state: Boolean, targetState: Boolean,
+                    name: String, cmd: String, dir: String, user: number}
   = {id: 0, state: false, targetState: false,
      name: '', cmd: '', dir: '', user: 1};
 
